@@ -28,6 +28,8 @@
 
 
 
+  <meta name="google-site-verification" content="SyOFL1enPAoQ4IZbTniF2DEgJc5HNRORE1eCDU8nC6g" />
+
 
 
 
@@ -107,7 +109,7 @@
 <meta property="og:site_name" content="sylar&#39;s blog">
 <meta property="og:description" content="编码,深浅copyencode,decode在python2中使用的一些迷糊,python3中更容易理解要理解encode和decode,首先我们要明白编码,字符和二进制的相关概念,简单来说,计算机的产生和设计只能进行二进制的运算,聪明的先辈们发明了ASCii编码用不同的二进制来表示不同英文字符实现.后来由于各国计算机的普及和推广,由于语言的原因产生了:Unicode,GB2312,UTF-8等不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-16T09:04:23.217Z">
+<meta property="og:updated_time" content="2018-03-16T11:46:05.644Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python基础(二)">
 <meta name="twitter:description" content="编码,深浅copyencode,decode在python2中使用的一些迷糊,python3中更容易理解要理解encode和decode,首先我们要明白编码,字符和二进制的相关概念,简单来说,计算机的产生和设计只能进行二进制的运算,聪明的先辈们发明了ASCii编码用不同的二进制来表示不同英文字符实现.后来由于各国计算机的普及和推广,由于语言的原因产生了:Unicode,GB2312,UTF-8等不">
@@ -132,6 +134,15 @@
 
 
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115901048-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115901048-1');
+</script>
 
 
 
@@ -258,11 +269,42 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
     </ul>
   
 
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -393,7 +435,7 @@
 <p>编码是将字符串转换成二进制编码.<br>解码是将二进制编码转换为字符串.<br>python2中默认使用ASCII编码,python3使用Unicode<br>获取系统默认编码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">print(sys.getdefaultencoding())</span><br></pre></td></tr></table></figure></p>
 <p>简单来说就是Unicode是二进制字符编码,兼容GBK,UTF-8,所有字符编码要转换都需要通过Unicode来作为桥梁来相互转换.在python解释器使用的字符编码是Unicode.中国使用的操作系统默认编码是GBK.而我们常用程序又有可能使用的其它国家的编码.所以这之间就存在一个编码和解码的过程.</p>
 <p>所以我们记住utf8的python字符可以转化为gbk,big5等编码转换,但是要吧gbk,big5等编码转换为utf8必须要知道字符原来使用的那种编码集.不知道原来的字符集就没有办法转化为utf8.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#打开test.txt切换编码为utf8,gbk,big5可以看到不同效果</span><br><span class="line">a = &apos;中國&apos;</span><br><span class="line">b_utf8 =a.encode(encoding=&apos;utf8&apos;)</span><br><span class="line">b_big5 =a.encode(encoding=&apos;big5&apos;)</span><br><span class="line">b_gbk = a.encode(encoding=&apos;gbk&apos;)</span><br><span class="line"></span><br><span class="line">with open(&apos;test.txt&apos;,&apos;wb&apos;) as f:</span><br><span class="line">    f.write(b_utf8)</span><br><span class="line">    f.write(b_big5)</span><br><span class="line">    f.write(b_gbk)</span><br></pre></td></tr></table></figure></p>
-<p>最后:<br>1, python3是支持直接使用UTF-8(因为UTF-8是Unicode的一个扩展集,能够自动转换),但是在不同语言系的操作系统中可能会乱码.所以知道为什么有时候编写程序的时候全是乱码b’\xxx\xxx’的数据了吧,这是字符文本在Unicode中的编码<br>2, 关于为什么输出的是\xxx的数据.这个又涉及到二进制和16进制的转换了,我猜想应该是Unicode是使用16进制来记录二进制.</p>
+<p>最后:<br>1, python3是支持直接使用UTF-8(因为UTF-8是Unicode的一个扩展集,能够自动转换),但是在不同语言系的操作系统中可能会乱码.所以知道为什么有时候编写程序的时候全是乱码b’\xxx\xxx’的数据了吧,这是字符文本在Unicode中的编码<br>2, 关于为什么输出的是\xxx的数据.这个又涉及到二进制和16进制的转换了,我猜想应该是Unicode是使用16进制来记录二进制.<br>3, html中的utf8使用/%做占位符,python中的utf8使用\x做占位符.所以网页中的链接中的汉字在python中要特殊处理<br>4,要解码必须要知道原来的字符是使用哪种文字编码.</p>
 <h3 id="深浅copy"><a href="#深浅copy" class="headerlink" title="深浅copy"></a>深浅copy</h3><p>浅copy的方式,浅copy也是一种面向对象的实现,初学者可以这样去理解浅copy只是复制了对象的内存地址,对于一些复杂的数据类型对象使用的内存地址进行.<br>当列表中包含一个子列表时,复制的也是这个子列表的内存地址.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#申明一个列表</span><br><span class="line">human = [&apos;name&apos;,[&apos;age&apos;,18]]</span><br><span class="line">#使用几种浅copy方式复制数据</span><br><span class="line">p1 = human[:] #切片的方式</span><br><span class="line">p2 = list(human) #使用内置函数</span><br><span class="line"></span><br><span class="line">import copy</span><br><span class="line">p3 = copy.copy(human) #使用copy模块浅copy方法</span><br><span class="line"></span><br><span class="line">p4 = human.copy() #使用列表的copy方法,其实也是引用的copy模块浅copy的方法</span><br></pre></td></tr></table></figure></p>
 <p>这时候我们假如human是同一个生日的同学类型.他们的name属性不一致,但是随着时间的变化,年龄都会增长,所以他们的age的变化都会一致</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">p1[0] = &apos;dongxie&apos;</span><br><span class="line">p2[0] = &apos;xidu&apos;</span><br><span class="line">p3[0] = &apos;nandi&apos;</span><br><span class="line">p4[0] = &apos;beigai&apos;</span><br><span class="line">print(p1,p2,p3,p4)</span><br><span class="line">#这时候不管修改谁的年龄,大家年龄都会变</span><br><span class="line">p1[1][1] = 23</span><br><span class="line">print(p1,p2,p3,p4)</span><br></pre></td></tr></table></figure>
@@ -781,6 +823,326 @@
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 
