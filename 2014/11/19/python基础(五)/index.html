@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="#列表,元组,集合 列表在python中是由数个有序的元素组成的数据结构,每一个元素对应一个index索引来隐式标注元素在列表中的位置.是python中最常用的一种数据类型.需要注意的是列表中可以有重复相同的数据. 列表的常用操作:包括索引,切片,增删改查等.1234567891011121314151617181920212223242526272829303132333435363738394">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础(五)">
+<meta property="og:url" content="http://yoursite.com/2014/11/19/python基础(五)/index.html">
+<meta property="og:site_name" content="sylar&#39;s blog">
+<meta property="og:description" content="#列表,元组,集合 列表在python中是由数个有序的元素组成的数据结构,每一个元素对应一个index索引来隐式标注元素在列表中的位置.是python中最常用的一种数据类型.需要注意的是列表中可以有重复相同的数据. 列表的常用操作:包括索引,切片,增删改查等.1234567891011121314151617181920212223242526272829303132333435363738394">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-16T09:14:22.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python基础(五)">
+<meta name="twitter:description" content="#列表,元组,集合 列表在python中是由数个有序的元素组成的数据结构,每一个元素对应一个index索引来隐式标注元素在列表中的位置.是python中最常用的一种数据类型.需要注意的是列表中可以有重复相同的数据. 列表的常用操作:包括索引,切片,增删改查等.1234567891011121314151617181920212223242526272829303132333435363738394">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/11/19/python基础(五)/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python基础(五) | sylar's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sylar's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Linux从入门到入土</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/11/19/python基础(五)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sylar">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sylar's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python基础(五)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-11-19T08:55:29+08:00">2014-11-19</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#列表,元组,集合</p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>在python中是由数个有序的元素组成的数据结构,每一个元素对应一个index索引来隐式标注元素在列表中的位置.是python中最常用的一种数据类型.需要注意的是列表中可以有重复相同的数据.</p>
+<h3 id="列表的常用操作-包括索引-切片-增删改查等"><a href="#列表的常用操作-包括索引-切片-增删改查等" class="headerlink" title="列表的常用操作:包括索引,切片,增删改查等."></a>列表的常用操作:包括索引,切片,增删改查等.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#首先申明3个列表</span><br><span class="line">list_all = [&apos;22&apos;,&apos;sylar&apos;,&apos;22&apos;,&apos;open&apos;,&apos;4&apos;,&apos;sklfj&apos;,&apos;open&apos;,16,&apos;sjk113&apos;,&apos;skf_kjdk&apos;,&apos;open&apos;,&apos;skj*&amp;%)&apos;,&apos;f_s2df&apos;]</span><br><span class="line">list_num = [1,4,7,3,5,4]</span><br><span class="line">list_alp = [&apos;axod&apos;,&apos;sccde&apos;,&apos;lsoM&apos;,&apos;JLKSI&apos;,&apos;KDIiid&apos;]</span><br><span class="line"></span><br><span class="line">#切片,是用index来获取列表的某个或几个元素,其中多个元素用[start:end:step]来获取,index是从0开始,-1,-2来表示列表的最右的后几位</span><br><span class="line">print(list_all[0])</span><br><span class="line">print(list_all[2:10:2])</span><br><span class="line">print(list_all[7:-1])</span><br><span class="line">print(list_all[7:])</span><br><span class="line">print(list_all[:7])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#append 在列表末尾添加一个值</span><br><span class="line">list_alp.append(&apos;append&apos;)</span><br><span class="line">print(&apos; append 方法---&gt;:&apos;,list_alp)</span><br><span class="line"></span><br><span class="line">#count 记录一个值在列表中出现的次数</span><br><span class="line">print(&apos; count 方法---&gt;:&apos;,list_all.count(&apos;open&apos;))</span><br><span class="line"></span><br><span class="line">#copy复制一个列表</span><br><span class="line">l_copy = list_all.copy()</span><br><span class="line">print(l_copy)</span><br><span class="line"></span><br><span class="line">#clear清空列表</span><br><span class="line">print(l_copy.clear())</span><br><span class="line"></span><br><span class="line">#extend将两个表合并</span><br><span class="line">list_all.extend(list_num)</span><br><span class="line">print(&apos; extend 方法---&gt;:&apos;,list_all)</span><br><span class="line"></span><br><span class="line">#insert插入一个元素,可以指定index来确定元素的位置</span><br><span class="line">list_alp.insert(2,&apos;sylar&apos;)</span><br><span class="line">print(&apos; insert 方法---&gt;:&apos;,list_alp)</span><br><span class="line"></span><br><span class="line">#index ,打印列表中某个值的index</span><br><span class="line">print(&apos; index 方法---&gt;:&apos;,list_all.index(&apos;a&apos;))</span><br><span class="line"></span><br><span class="line">#pop 删除列表中的元素,默认是最后一个</span><br><span class="line">print(&apos; pop 方法---&gt;:&apos;,&apos; pop---&gt;:&apos;,list_all.pop(),&apos; list_all---&gt;:&apos;,list_all)</span><br><span class="line">print(&apos; pop 方法---&gt;:&apos;,&apos; pop---&gt;:&apos;,list_all.pop(0),&apos; list_all---&gt;:&apos;,list_all)</span><br><span class="line">#remove 删除列表中找到的值,如果有相同的只删除找到的第一个,如果值不存在会引发一个错误</span><br><span class="line">print(&apos; remove 方法---&gt;:&apos;,list_all.remove(&apos;open&apos;),&apos; list_all---&gt;:&apos;,list_all)</span><br><span class="line"></span><br><span class="line">#reverse 将列表的元素进行反向排序</span><br><span class="line">print(&apos; reverse 方法---&gt;:&apos;,list_all.reverse(),list_all)</span><br><span class="line"></span><br><span class="line">#sort按照ASCII码给列表排序</span><br><span class="line">print(&apos; 方法---&gt;:&apos;,list_all.sort(),list_all)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#补充:一个循环列表比较好用的函数enumerate,可以快速获取列表的元素和对应的index</span><br><span class="line">for index,item in enumerate(list_all):</span><br><span class="line">    print(index,item)</span><br><span class="line">#或者:</span><br><span class="line">for index,item in enumerate(list_all,1):</span><br><span class="line">    print(index,item)</span><br></pre></td></tr></table></figure>
+<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>与列表类似的一个数据结构,不同在于元组的元素不能修改.需要注意的是元组的元素不能修改,但是元组的元素的元素是可以修改的.</p>
+<h3 id="元组的常用操作切片和列表一样-只是没有了修改元素的方法"><a href="#元组的常用操作切片和列表一样-只是没有了修改元素的方法" class="headerlink" title="元组的常用操作切片和列表一样,只是没有了修改元素的方法"></a>元组的常用操作切片和列表一样,只是没有了修改元素的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#申明元组</span><br><span class="line">tup1 = (1,2,3,[&apos;a&apos;,&apos;a&apos;, &apos;b&apos;])</span><br><span class="line"></span><br><span class="line">#切片</span><br><span class="line">print(tup1[0])</span><br><span class="line">print(tup1[0:8:2])</span><br><span class="line">print(tup1[3:-1])</span><br><span class="line">print(tup1[3:])</span><br><span class="line">print(tup1[:3])</span><br><span class="line"></span><br><span class="line">#index获取元素的index值</span><br><span class="line">print(tup1.index(2))</span><br><span class="line"></span><br><span class="line">#count对相同元素进行统计</span><br><span class="line">print(tup1.count(5))</span><br><span class="line"></span><br><span class="line">#补充 元素的元素可以修改,深浅copy的经典案例</span><br><span class="line">tup1[-1][1] = &apos;c&apos;</span><br><span class="line">print(tup1)</span><br></pre></td></tr></table></figure>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p>由多个无序且不重复的多个元素组成数据结构.所以集合也没有index.通常用来做去重和关系测试工作!集合也是无序的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#申明集合使用set函数.可以是列表元组字符串等数据类型,</span><br><span class="line">set_test1 = set(list_num)</span><br><span class="line">print(set_test1)</span><br><span class="line">set_test2 = set([2,4,45,43,3,6,0,98,9,7,6])</span><br><span class="line">print(set_test2)</span><br><span class="line">set_test3 = set(&apos;sylar&apos;)</span><br><span class="line">print(set_test3)</span><br><span class="line">set_test4 = set([1,3,5])</span><br><span class="line">print(&apos;set4&apos;,set_test4)</span><br><span class="line"></span><br><span class="line">#集合常用操作,增删和关系测试</span><br><span class="line"></span><br><span class="line">#add添加元素</span><br><span class="line">set_test1.add(45)</span><br><span class="line">print(set_test1)</span><br><span class="line"></span><br><span class="line">#copy,复制</span><br><span class="line">set_copy = set_test1.copy()</span><br><span class="line">print(set_copy)</span><br><span class="line"></span><br><span class="line">#clear清空</span><br><span class="line">set_copy = set_copy.clear()</span><br><span class="line">print(set_copy)</span><br><span class="line"></span><br><span class="line">#difference差集,在set_test1中有在set_test2没有</span><br><span class="line">a = set_test1.difference(set_test2)</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">#intersection交集,在set_test1中有在set_test2也有的.</span><br><span class="line">a = set_test1.intersection(set_test2)</span><br><span class="line">print(set_test1 &amp; set_test2)</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">#isdisjoint,在set_test4和set_test5中都没有相同的元素.则返回True,反之</span><br><span class="line">set_test5 = set([2,4,6])</span><br><span class="line">a = set_test4.isdisjoint(set_test5)</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">#issuperset父集issubset子集,判断一个集合是不是另外一个集合的父集或者子集.返回值True或者False</span><br><span class="line">a = set_test1.issuperset(set_test4)</span><br><span class="line">print(a)</span><br><span class="line">a = set_test4.issubset(set_test1)</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">#pop删除并返回任意一个元素</span><br><span class="line">a = set_test1.pop()</span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">#remove删除指定元素</span><br><span class="line">print(set_test1.remove(7))</span><br><span class="line"></span><br><span class="line">#symmetric_difference对称差集,去除两个集合中都有的元素之后的结果</span><br><span class="line">print(set_test1.symmetric_difference(set_test2))</span><br><span class="line"></span><br><span class="line">#union并集两个集合组合到一起的结果</span><br><span class="line">print(set_test1.union(set_test2))</span><br><span class="line"></span><br><span class="line">#update只能把可迭代的对象加入原集合</span><br><span class="line">set_test1.update(set_test5)</span><br><span class="line">print(set_test1)</span><br><span class="line"></span><br><span class="line">#数学运算符&amp;交集,|并集,- 差集,^ 对称差集</span><br><span class="line">print(set_test1 &amp; set_test2)</span><br><span class="line">print(set_test1 | set_test2)</span><br><span class="line">print(set_test1 - set_test2)</span><br><span class="line">print(set_test1 ^ set_test2)</span><br></pre></td></tr></table></figure></p>
+<h2 id="补充上面3种数据结构都可以使用的"><a href="#补充上面3种数据结构都可以使用的" class="headerlink" title="补充上面3种数据结构都可以使用的"></a>补充上面3种数据结构都可以使用的</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#in判断元素是否在集合中</span><br><span class="line">for i in set_test2:</span><br><span class="line">    print(i)</span><br><span class="line">if 0 not in list_num:print(&apos;yes&apos;)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/16/python基础(四)/" rel="next" title="python基础(四)">
+                <i class="fa fa-chevron-left"></i> python基础(四)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/11/21/python基础(六)/" rel="prev" title="python基础(六)">
+                python基础(六) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDg4OS8xMTQyNg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="sylar" />
+            
+              <p class="site-author-name" itemprop="name">sylar</p>
+              <p class="site-description motion-element" itemprop="description">learn</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">1.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#列表的常用操作-包括索引-切片-增删改查等"><span class="nav-number">1.1.</span> <span class="nav-text">列表的常用操作:包括索引,切片,增删改查等.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组"><span class="nav-number">2.</span> <span class="nav-text">元组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#元组的常用操作切片和列表一样-只是没有了修改元素的方法"><span class="nav-number">2.1.</span> <span class="nav-text">元组的常用操作切片和列表一样,只是没有了修改元素的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">3.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充上面3种数据结构都可以使用的"><span class="nav-number">4.</span> <span class="nav-text">补充上面3种数据结构都可以使用的</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sylar</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

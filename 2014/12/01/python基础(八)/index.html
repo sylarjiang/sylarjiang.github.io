@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="生成器在函数中使用yield关键字就会将一个普通的函数变成一个生成器(generator),普通的函数只能使用return来退出函数,而不执行return之后的代码.而生成器可以使用调用一个next方法来返回生成器中上一次yield时候的状态.并且可以使用send方法给yield重新赋值.这样就可以灵活的进入和跳出函数.因此在程序中生成器可以中断当前函数,去执行其它的代码,在合适的时候跳回函数继续">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础(八)">
+<meta property="og:url" content="http://yoursite.com/2014/12/01/python基础(八)/index.html">
+<meta property="og:site_name" content="sylar&#39;s blog">
+<meta property="og:description" content="生成器在函数中使用yield关键字就会将一个普通的函数变成一个生成器(generator),普通的函数只能使用return来退出函数,而不执行return之后的代码.而生成器可以使用调用一个next方法来返回生成器中上一次yield时候的状态.并且可以使用send方法给yield重新赋值.这样就可以灵活的进入和跳出函数.因此在程序中生成器可以中断当前函数,去执行其它的代码,在合适的时候跳回函数继续">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-16T09:01:25.116Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python基础(八)">
+<meta name="twitter:description" content="生成器在函数中使用yield关键字就会将一个普通的函数变成一个生成器(generator),普通的函数只能使用return来退出函数,而不执行return之后的代码.而生成器可以使用调用一个next方法来返回生成器中上一次yield时候的状态.并且可以使用send方法给yield重新赋值.这样就可以灵活的进入和跳出函数.因此在程序中生成器可以中断当前函数,去执行其它的代码,在合适的时候跳回函数继续">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/12/01/python基础(八)/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python基础(八) | sylar's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sylar's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Linux从入门到入土</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/12/01/python基础(八)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sylar">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sylar's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python基础(八)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-01T08:55:29+08:00">2014-12-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><p>在函数中使用yield关键字就会将一个普通的函数变成一个生成器(generator),普通的函数只能使用return来退出函数,而不执行return之后的代码.而生成器可以使用调用一个next方法来返回生成器中上一次yield时候的状态.并且可以使用send方法给yield重新赋值.这样就可以灵活的进入和跳出函数.因此在程序中生成器可以中断当前函数,去执行其它的代码,在合适的时候跳回函数继续执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def yield_test():</span><br><span class="line">    print(&apos;befor the first&apos;)</span><br><span class="line">    first = yield</span><br><span class="line">    print(first)</span><br><span class="line">    print(&apos;before the second&apos;)</span><br><span class="line">    second = yield</span><br><span class="line">    print(second)</span><br><span class="line">    print(&apos;before the Third&apos;)</span><br><span class="line">    Third = yield &apos;也可以有返回值&apos;</span><br><span class="line">    print(Third)</span><br><span class="line">    print(&apos;after the Third&apos;)</span><br><span class="line">    </span><br><span class="line">#next方法</span><br><span class="line">g = yield_test()</span><br><span class="line">g.__next__()</span><br><span class="line">g.__next__()</span><br><span class="line">yield_text = g.__next__()		#获取yield传出的数据,接受数据next和发送数据yield的位置顺序相同</span><br><span class="line">print(yield_text)</span><br><span class="line"># g.__next__()</span><br><span class="line"></span><br><span class="line">#send方法</span><br><span class="line">g = yield_test()</span><br><span class="line">g.__next__()     				#做实验时第一次必须是next,send会报错</span><br><span class="line">g.send(&apos;2222&apos;)					#send发送的数据会被赋值给当前yield之前的代码中生效.</span><br><span class="line">								#简单说是赋值给前一个yield以便本次代码执行</span><br><span class="line">g.send(&apos;3333&apos;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>补充:通过这个例子我们发现<br>1,send方法被生成器当作了一次<strong>next</strong>,并且send的值会复制给上一个yield,<br>2,yield和__next_方法是一一对应.当next比函数内yield多时,最后一个next会报一个StopIteration异常.<br>3,yield后的代码会在下一次next调用时才会执行.<br>4,yield可以发送数据,也可以接受数据.获取数据时要注意传入和传出不同时机才能获取正确的yield值</p>
+</blockquote>
+<p>所以我们通常把生成器用在可循环的对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def read_file():</span><br><span class="line">    read_size = 10</span><br><span class="line">    with open(&apos;test.txt&apos;,&apos;rb&apos;) as f:</span><br><span class="line">        while True:</span><br><span class="line">            text = f.read(read_size)</span><br><span class="line">            yield text		#通过yield获取当前的text值</span><br><span class="line"></span><br><span class="line">g = read_file()			</span><br><span class="line">while True:</span><br><span class="line">    print(g.__next__())</span><br><span class="line">#生成器这样使用会进入一个死循环</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>补充:<br>5, 生成器必须要有明确的退出条件,为了不造成死循环. 所以慎用循环.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def read_file():</span><br><span class="line">    read_size = 10</span><br><span class="line">    with open(&apos;test.txt&apos;,&apos;rb&apos;) as f:</span><br><span class="line">        while True:</span><br><span class="line">            text = f.read(read_size)</span><br><span class="line">            if text:				#判断文件是否读取完毕</span><br><span class="line">                yield text		</span><br><span class="line">            else:</span><br><span class="line">                return</span><br><span class="line"></span><br><span class="line">g = read_file()			</span><br><span class="line">while True:</span><br><span class="line">    print(g.__next__())</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>iterable(可迭代对象)可以直接作用与for循环的对象.可迭代对象分为:一,集合数据类型如:str字符串,list列表,dict字典,tuple元组,set集合等.二,生成器generator和带yield的函数.判断是否为iterable对象可以使用函数isinstance().<br>在python中list等集合数据类型是非常占用内存的,通过使用iter()可以将一个可迭代对象变成一个迭代器.迭代器中不存储具体数据,只是保存了产生这种数据的逻辑对象.在使用时才产生需要的数据,可以大大节省空间.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from collections import Iterator</span><br><span class="line">list = []</span><br><span class="line">for i in range(10):</span><br><span class="line">    list.append(i)</span><br><span class="line">print(list,isinstance(list,Iterator))</span><br><span class="line"></span><br><span class="line">list_Iterator= iter(list)</span><br><span class="line">print(list_Iterator,isinstance(list_Iterator,Iterator))</span><br><span class="line">for i in list_Iterator:</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>补充:<br>1, 迭代器中并没有保存真正的数据,只有在我们去通过next方法去迭代器中取数据<br>2, 迭代器中是按照一定的顺序输出所有数据,不能取指定的数据.</p>
+</blockquote>
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>装饰器(decorator)是一种函数的高级用法,主要是通过高阶函数和返回函数组合的方式,修饰其它函数.达到被修饰的函数代码不用修改,调用方式也不变的目的.主要作用就是给被修饰的函数添加功能.</p>
+<ol>
+<li>原函数不带参数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#假如有这么三个函数,我们需要记录访问时间和函数名,但是又不能修改函数</span><br><span class="line">def home():</span><br><span class="line">    print(&apos;index page&apos;)</span><br><span class="line">def bbs():</span><br><span class="line">    print(&apos;bbs page&apos;)</span><br><span class="line">def news():</span><br><span class="line">    print(&apos;news page&apos;)</span><br><span class="line">home()</span><br><span class="line">bbs()</span><br><span class="line">news()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#加上装饰器后的效果</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">log_list = []</span><br><span class="line">def user_log(func):     #将被装饰函数作为参数传入user_log这个装饰器</span><br><span class="line">    def wrapper():		#触发执行装饰器的函数</span><br><span class="line">        func()			#在装饰器内执行原函数</span><br><span class="line">        log_time = time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)	#装饰器内具体新代码</span><br><span class="line">        page_name = func.__name__</span><br><span class="line">        log_page = str(log_time+&apos;  -&gt;&apos;+page_name)</span><br><span class="line">        log_list.append(log_page)</span><br><span class="line">    return wrapper		#将触发函数返回,一定不要加()执行符号</span><br><span class="line"></span><br><span class="line">@user_log</span><br><span class="line">def home():</span><br><span class="line">    print(&apos;index page&apos;)</span><br><span class="line"></span><br><span class="line">@user_log</span><br><span class="line">def bbs():</span><br><span class="line">    print(&apos;bbs page&apos;)</span><br><span class="line"></span><br><span class="line">@user_log</span><br><span class="line">def news():</span><br><span class="line">    print(&apos;news page&apos;)</span><br><span class="line"></span><br><span class="line">home()</span><br><span class="line">bbs()</span><br><span class="line">news()</span><br><span class="line">print(log_list)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>带参数的函数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">计算函数运行时间的装饰器</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def time_consum(func):</span><br><span class="line">    def wrapper(*args,**kwargs):</span><br><span class="line">        start_time = time.time()</span><br><span class="line">        func(*args,**kwargs)</span><br><span class="line">        print(&apos;running&apos;,time.time()-start_time)</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@time_consum</span><br><span class="line">def user_profile(username):</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    print(&apos;welcome %s&apos;%username)</span><br><span class="line"></span><br><span class="line">user_profile(&apos;sylar&apos;)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>装饰器带参数,</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#根据装饰器参数执行不同的功能</span><br><span class="line">import time</span><br><span class="line">log_list = []</span><br><span class="line">def change_type(ch_type=&apos;other&apos;):</span><br><span class="line">    def decorator(func):</span><br><span class="line">        def wrapper(*args,**kwargs):</span><br><span class="line">            if ch_type == &apos;tc&apos;:</span><br><span class="line">                start_time = time.time()</span><br><span class="line">                func(*args,**kwargs)</span><br><span class="line">                print(&apos;running&apos;,time.time()-start_time)</span><br><span class="line">            else:</span><br><span class="line">                func()</span><br><span class="line">                print(&apos;other type code&apos;)</span><br><span class="line">                log_time = time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)  # 装饰器内具体新代码</span><br><span class="line">                page_name = func.__name__</span><br><span class="line">                log_page = str(log_time + &apos;  -&gt;&apos; + page_name)</span><br><span class="line">                log_list.append(log_page)</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorator</span><br><span class="line"></span><br><span class="line">@change_type()</span><br><span class="line">def home():</span><br><span class="line">    print(&apos;index page&apos;)</span><br><span class="line"></span><br><span class="line">@change_type(&apos;tc&apos;)</span><br><span class="line">def user_profile(username):</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    print(&apos;welcome %s&apos;%username)</span><br><span class="line"></span><br><span class="line">home()</span><br><span class="line">user_profile(&apos;sylar&apos;)</span><br><span class="line">print(log_list)</span><br></pre></td></tr></table></figure>
+<h3 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h3><p>在函数内部,调用了这个函数自己.就叫做递归函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#直接使用递归法求解斐波那契数量的第num个数字</span><br><span class="line">def fib(num):</span><br><span class="line">    if num&lt;2:</span><br><span class="line">        return num</span><br><span class="line">    return fib(num-1)+fib(num-2)</span><br><span class="line"></span><br><span class="line">for i in range(10):</span><br><span class="line">    print(fib(i))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>补充递归函数必须要有一个明确的结束条件,python中支持最大递归次数1000</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/27/python基础(七)/" rel="next" title="python基础(七)">
+                <i class="fa fa-chevron-left"></i> python基础(七)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/12/03/python基础(九)/" rel="prev" title="python基础(九)">
+                python基础(九) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDg4OS8xMTQyNg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="sylar" />
+            
+              <p class="site-author-name" itemprop="name">sylar</p>
+              <p class="site-description motion-element" itemprop="description">learn</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器"><span class="nav-number">1.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器"><span class="nav-number">2.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰器"><span class="nav-number">3.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归函数"><span class="nav-number">4.</span> <span class="nav-text">递归函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sylar</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
